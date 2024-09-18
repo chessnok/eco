@@ -37,12 +37,7 @@ def serviceworker(request: HttpRequest) -> HttpResponse:
     }
     return render(
         request,
-        "admin/serviceworker.js",
+        "serviceworker.js",
         content_type="application/javascript",
         context=context,
     )
-
-
-def manifest(request: HttpRequest) -> HttpResponse:
-    """Manifest view."""
-    return render(request, "admin/manifest.json", content_type="application/json")

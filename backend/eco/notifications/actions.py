@@ -8,7 +8,7 @@ from notifications.models import PushSubscription
 
 from pywebpush import WebPushException, webpush
 
-from symptomato import settings
+from django.conf import settings
 
 
 def send_push_notification(user: User, message: str, url: str = None) -> None:

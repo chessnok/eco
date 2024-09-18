@@ -5,6 +5,17 @@
 {% block content %}
     <h2>Личный кабинет</h2>
 
+    {% if user.is_organizer and user.organither %}
+        <h3>Информация об организации</h3>
+        <p>Название организации: {{ user.organither.organization_name }}</p>
+        <p>ОГРН: {{ user.organither.ogrn }}</p>
+        <p>Статус: {{ user.organither.get_status_display }}</p>
+    {% else %}
+        <p>Вы не являетесь организатором. <a
+                href="{% url 'register_organizer' %}">Зарегистрироваться как
+            организатор</a></p>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

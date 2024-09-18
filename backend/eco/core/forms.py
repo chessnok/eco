@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from core.models import UserModel
+from core.models import UserModel, Event
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -20,4 +20,14 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             'age': forms.NumberInput(attrs={'min': 0}),
             'home_address': forms.TextInput(attrs={'id': 'address-input'}),
+        }
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ('name', 'date', 'description', 'location')
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'description': forms.Textarea(attrs={'rows': 3}),
         }

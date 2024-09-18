@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.yandex",
     "core.apps.CoreConfig",
     "notifications.apps.NotificationsConfig",
+    "events.apps.EventsConfig",
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -164,3 +165,10 @@ EMAIL_HOST_USER = config("EMAIL_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
 
 AUTH_USER_MODEL = "core.UserModel"
+
+# Vapid
+VAPID_PUBLIC_KEY = config("VAPID_PUBLIC_KEY", default="")
+VAPID_PRIVATE_KEY = config("VAPID_PRIVATE_KEY", default="")
+VAPID_ADMIN_EMAIL = config("VAPID_ADMIN_EMAIL", default="example@example.com")
+
+ORGANIZATIONS_API_KEY = config("ORGANIZATIONS_API_KEY", default="")

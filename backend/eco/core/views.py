@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from .models import Event
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, UserProfileForm
+from .forms import UserCreationForm, UserProfileForm, EventForm
 from rest_framework import generics
 from .serializers import EventSerializer
 
@@ -40,3 +40,15 @@ def user_profile(request):
         form = UserProfileForm(instance=request.user)
 
     return render(request, 'user_profile.html', {'form': form})
+
+@login_required
+def new_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('event_list')
+    else:
+        form = EventForm()
+
+    return render(request, 'new_event.html', {'form': form})
