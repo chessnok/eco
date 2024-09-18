@@ -10,7 +10,7 @@ class EventAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
     fieldsets = (
-        (None, {'fields': ('name', 'date', 'description', 'location', 'status', 'is_published')}),
+        (None, {'fields': ('name', 'date', 'description', 'location', 'status', 'is_published', 'latitude', 'longitude')}),
     )
 
 @admin.register(UserModel)

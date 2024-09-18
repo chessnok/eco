@@ -19,4 +19,5 @@ class UserProfileForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email', 'age', 'home_address')
         widgets = {
             'age': forms.NumberInput(attrs={'min': 0}),
+            'home_address': forms.TextInput(attrs={'id': 'address-input'}),
         }

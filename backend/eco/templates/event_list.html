@@ -9,7 +9,7 @@
     <button type="submit" class="btn btn-primary">Фильтровать</button>
 </form>
 
-<ul class="list-group">
+<ul class="list-group mb-3">
     {% for event in events %}
         <li class="list-group-item">
             <strong>{{ event.name }}</strong><br>
@@ -18,4 +18,22 @@
         </li>
     {% endfor %}
 </ul>
+
+<div id="events-map" style="width: 100%; height: 400px;"></div>
+
+<script>
+ymaps.ready(function() {
+    var map = new ymaps.Map('events-map', {
+        center: [55.76, 37.64],
+        zoom: 10
+    });
+
+    {% for event in events %}
+    var placemark = new ymaps.Placemark([{{ event.latitude }}, {{ event.longitude }}], {
+        balloonContent: '{{ event.name }}<br>{{ event.date }}<br>{{ event.description }}'
+    });
+    map.geoObjects.add(placemark);
+    {% endfor %}
+});
+</script>
 {% endblock %}
