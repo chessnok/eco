@@ -3,6 +3,7 @@
 {% block title %}Список мероприятий{% endblock %}
 
 {% block content %}
+<section>
 <h2>Список мероприятий</h2>
 <form method="GET" class="form-inline mb-3">
     <input type="text" name="location" class="form-control mr-2" placeholder="Введите локацию">
@@ -36,4 +37,5 @@ ymaps.ready(function() {
     {% endfor %}
 });
 </script>
+</section>
 {% endblock %}
