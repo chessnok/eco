@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+{% load socialaccount %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h2>Регистрация</h2>
+            <form method="POST" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">
+                    Зарегистрироваться
+                </button>
+            </form>
+
+            <p class="text-center mt-3">
+                <a href="{% url 'account_login' %}">Уже есть аккаунт? Войти</a>
+            </p>
+
+            <div class="text-center mt-3">
+                <p>Или зарегистрируйтесь через:</p>
+                <form method="POST" action="{% provider_login_url 'yandex' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Yandex
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

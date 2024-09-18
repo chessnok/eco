@@ -1,0 +1,91 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:alpine3.19
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "eco"
+      POSTGRES_USER: "eco"
+      POSTGRES_DB: "eco"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d eco -U eco" ]
+      interval: 5s
+      timeout: 60s
+      retries: 20
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/code/
+      - static_volume:/static
+      - media_volume:/media
+
+  redis:
+    image: "redis:alpine"
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build: ./backend
+    command: celery -A eco.celery worker --loglevel=info
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend:/code/
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+  celery-beat:
+    build: ./backend
+    command: celery -A eco.celery beat --loglevel=info
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend:/code/
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - "10001:80"
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/app/eco/static
+      - media_volume:/app/eco/media
+  flower:
+    image: mher/flower
+    restart: always
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - FLOWER_PORT=5555
+    depends_on:
+      - redis
+
+volumes:
+  db_data:
+  static_volume:
+  media_volume:
+  redis_data:

@@ -1,0 +1,17 @@
+django==5.0.6
+python-decouple==3.8
+psycopg2-binary==2.9.9
+python-telegram-bot==21.3
+django-pwa==2.0.0
+requests==2.32.3
+Pillow==10.4.0
+django-modeltranslation==0.19.8
+django-summernote==0.8.20.0
+bleach==4.1.0
+tablib[xlsx]==3.5.0
+django-import-export==4.1.1
+celery[redis]==5.4.0
+django-celery-beat==2.7.0
+quotequail==0.4.0
+email_reply_parser==0.5.12
+pywebpush==2.0.0

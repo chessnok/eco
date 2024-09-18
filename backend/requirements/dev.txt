@@ -1,0 +1,11 @@
+flake8==7.1.0
+flake8-bugbear
+flake8-comprehensions
+flake8-docstrings
+flake8-import-order
+flake8-builtins
+flake8-annotations
+flake8-quotes
+flake8-string-format
+black==24.4.2
+django-debug-toolbar==4.4.6

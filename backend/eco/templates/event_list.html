@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Список мероприятий{% endblock %}
+
+{% block content %}
+<h2>Список мероприятий</h2>
+<form method="GET" class="form-inline mb-3">
+    <input type="text" name="location" class="form-control mr-2" placeholder="Введите локацию">
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>
+
+<ul class="list-group">
+    {% for event in events %}
+        <li class="list-group-item">
+            <strong>{{ event.name }}</strong><br>
+            Локация: {{ event.location }}<br>
+            Дата: {{ event.date }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
