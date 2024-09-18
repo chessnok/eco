@@ -1,29 +1,18 @@
 {% extends "base_generic.html" %}
 {% load socialaccount %}
-
-{% block title %}Вход{% endblock %}
-
+{% block title%}Вход{% endblock %}
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <h2>Вход</h2>
-            <form method="POST" action="{% url 'account_login' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary btn-block">Войти
-                </button>
-            </form>
-
-            <p class="text-center mt-3">
-                <a href="{% url 'account_signup' %}">Нет аккаунта?
-                    Зарегистрироваться</a>
-            </p>
-
-            <div class="text-center mt-3">
-                <p>Или войдите через:</p>
-                <a href="{% provider_login_url 'yandex' %}"
-                   class="btn btn-secondary">Яндекс</a>
-            </div>
-        </div>
-    </div>
+<section>
+  <h2>Вход</h2>
+  <form method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {% include "includes/form.html" %}
+    <button type="submit" class="button primary">Войти</button>
+  </form>
+    <p style="margin-bottom: 0.5em;">Уже есть аккаунт? <a href="{% url 'account_signup' %}">Войти</a></p>
+    <p style="margin-bottom: 0.5em;">Или войдите через:</p>
+    <a class="button icon brands fa-hacker-news" href="{% provider_login_url 'yandex' %}"
+      >Яндекс</a
+    >
+</section>
 {% endblock %}

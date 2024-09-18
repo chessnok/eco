@@ -1,8 +1,7 @@
-{% extends 'base_generic.html' %}
-
-{% block title %}Личный кабинет{% endblock %}
-
+{% extends "base_generic.html" %}
+{% block title%}Личный кабинет{% endblock %}
 {% block content %}
+<section>
     <h2>Личный кабинет</h2>
 
     {% if user.is_organizer and user.organither %}
@@ -18,8 +17,9 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить изменения
+        {% include "includes/form.html" %}
+        <button type="submit" class="button primary">Сохранить изменения
         </button>
     </form>
+</section>
 {% endblock %}
