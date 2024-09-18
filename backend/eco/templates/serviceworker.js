@@ -70,7 +70,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
-    const urlToOpen = new URL(event.notification.data.url || '/admin/', self.location.origin);
+    const urlToOpen = new URL(event.notification.data.url || '/', self.location.origin);
     event.waitUntil(
         clients.matchAll({
             type: 'window',
