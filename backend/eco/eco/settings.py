@@ -32,10 +32,7 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://eco.insidedata.tech/",
-    "http://localhost/"
-]
+CSRF_TRUSTED_ORIGINS = ["http://eco.insidedata.tech/", "http://localhost/"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -58,9 +55,9 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = (
     # Стандартные бэкенды Django
-    'django.contrib.auth.backends.ModelBackend',
+    "django.contrib.auth.backends.ModelBackend",
     # Бэкенд для allauth
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 SITE_ID = 1  # Это нужно для работы сайтов в Django
@@ -71,10 +68,10 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 LOGIN_REDIRECT_URL = "/"
 SOCIALACCOUNT_PROVIDERS = {
-    'yandex': {
-        'APP': {
-            'client_id': config('YANDEX_OAUTH_CLIENT_ID', default=''),
-            'secret': config('YANDEX_OAUTH_SECRET', default=''),
+    "yandex": {
+        "APP": {
+            "client_id": config("YANDEX_OAUTH_CLIENT_ID", default=""),
+            "secret": config("YANDEX_OAUTH_SECRET", default=""),
         }
     }
 }
@@ -118,12 +115,9 @@ WSGI_APPLICATION = "eco.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("POSTGRES_DB", default=""),
-        "USER": config("POSTGRES_USER", default=""),
-        "PASSWORD": config("POSTGRES_PASSWORD", default=""),
-        "HOST": config("POSTGRES_HOST", default=""),
-    }
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    },
 }
 
 # Password validation
@@ -148,8 +142,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGES = [
-    ('ru', 'Russian'),
-    ('en', 'English'),
+    ("ru", "Russian"),
+    ("en", "English"),
 ]
 LANGUAGE_CODE = "ru"
 
@@ -179,10 +173,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_HOST = config("EMAIL_HOST", default="localhost")
 EMAIL_PORT = config("EMAIL_PORT", default=1025, cast=int)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", default="False",
-                       cast=lambda x: x.lower() in TRUE_VALUES)
-EMAIL_USE_SSL = config("EMAIL_USE_SSL", default="False",
-                       cast=lambda x: x.lower() in TRUE_VALUES)
+EMAIL_USE_TLS = config(
+    "EMAIL_USE_TLS", default="False", cast=lambda x: x.lower() in TRUE_VALUES
+)
+EMAIL_USE_SSL = config(
+    "EMAIL_USE_SSL", default="False", cast=lambda x: x.lower() in TRUE_VALUES
+)
 EMAIL_HOST_USER = config("EMAIL_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD", default="")
 
@@ -200,16 +196,16 @@ TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN", default="")
 TELEGRAM_CHAT_ID = config("TELEGRAM_CHAT_ID", default="")
 
 # Celery
-CELERY_BROKER_URL = config("CELERY_BROKER_URL",
-                           default="redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND",
-                               default="redis://localhost:6379/0")
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = config(
+    "CELERY_RESULT_BACKEND", default="redis://localhost:6379/0"
+)
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
 CELERY_BEAT_SCHEDULE = {
-    'send_event_reminders': {
-        'task': 'core.tasks.send_event_reminders',
-        'schedule': crontab(hour='12', minute='0'),  # Запуск каждый день
+    "send_event_reminders": {
+        "task": "core.tasks.send_event_reminders",
+        "schedule": crontab(hour="12", minute="0"),  # Запуск каждый день
     },
 }
 

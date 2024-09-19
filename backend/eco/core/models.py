@@ -58,11 +58,23 @@ class Event(models.Model):
         ('canceled', _('Отменено')),
         ('finished', _('Завершено')),
     ]
+    SEX_CHOICES = [
+        ('male', "Мужской"),
+        ('female', "Женский")
+    ]
+    TYPE_CHOICES = [
+        ('news', "Новости"),
+        ('event', "Мероприятия")
+    ]
 
     name = models.CharField(max_length=100)
     date = models.DateField()
     description = models.TextField()
-    location = models.CharField(max_length=255)
+    image = models.ImageField()
+    source = models.URLField()
+    sex = models.CharField(choices=SEX_CHOICES, max_length=6)
+    age = models.IntegerField()
+    type = models.CharField(choices=TYPE_CHOICES, max_length=5)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES,
                               default='scheduled')
     is_published = models.BooleanField(default=False)

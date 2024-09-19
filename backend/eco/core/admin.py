@@ -7,13 +7,13 @@ from .models import Event, UserModel, BotTicket, BotUser
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'date', 'status', 'is_published')
     list_filter = ('status', 'is_published', 'date')
-    search_fields = ('name', 'description', 'location')
+    search_fields = ('name', 'description')
     date_hierarchy = 'date'
     ordering = ('-date',)
 
     fieldsets = (
         (None, {'fields': (
-            'name', 'date', 'description', 'location', 'status',
+            'name', 'date', 'description', 'status',
             'is_published',
             'latitude', 'longitude')}),
     )

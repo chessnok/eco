@@ -29,7 +29,7 @@ class UserProfileForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ('name', 'date', 'description', 'longitude', 'latitude')
+        fields = ('name', 'sex', 'age', 'image', 'date', 'description', 'longitude', 'latitude')
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'description': forms.Textarea(attrs={'rows': 3}),
