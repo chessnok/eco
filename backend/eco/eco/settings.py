@@ -32,12 +32,11 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "*",
-]
 CSRF_TRUSTED_ORIGINS = [
-    "http://eco.insidedata.tech",
+    "http://eco.insidedata.tech/",
+    "http://localhost/"
 ]
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
