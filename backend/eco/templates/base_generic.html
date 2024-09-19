@@ -2,140 +2,132 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <title>{% block title %}Экотон Москвы{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static "/css/main.css" %}" />
+    <link rel="stylesheet" href="{% static "/css/main.css" %}"/>
     <script
-      src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"
-      type="text/javascript"
+            src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"
+            type="text/javascript"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/ymaps@0.2.1/dist/ymaps.cjs.min.js"></script>
-  </head>
-  <body class="is-preload">
-    <form style="display: none;" method="POST" action="/accounts/logout/" id="logout-form">
-        {% csrf_token %}
-      </form>
-    <div id="wrapper">
-      <div id="main">
+</head>
+<body class="is-preload">
+<form style="display: none;" method="POST" action="/accounts/logout/"
+      id="logout-form">
+    {% csrf_token %}
+</form>
+<div id="wrapper">
+    <div id="main">
         <div class="inner">{% block content %} {% endblock %}</div>
-      </div>
-      <div id="sidebar">
-        <div class="inner">
-          <!-- Search -->
-          <section id="search" class="alt">
-            <form method="post" action="#">
-              <input type="text" name="query" id="query" placeholder="Поиск" />
-            </form>
-          </section>
-
-          <!-- Menu -->
-          <nav id="menu">
-            <header class="major">
-              <h2>Меню</h2>
-            </header>
-            <ul>
-              <li><a href="/">Главная</a></li>
-              {% if user.is_authenticated %}
-              <li><a href="/events">События</a></li>
-              {% endif %}
-              {% if user.is_authenticated %}
-              <li>
-                <span class="opener">Аккаунт</span>
-                <ul>
-                  {% if user.is_authenticated %}
-                  <li><a href="/profile">Профиль</a></li>
-                  <li><a id="submit-logout-form" href="#">Выйти</a></li>
-                  {% else %}
-                  <li><a href="/accounts/login">Войти</a></li>
-                  <li><a href="/accounts/signup">Зарегистрироваться</a></li>
-                  {% endif %}
-                </ul>
-              </li>
-              {% else %}
-              <li><a href="/accounts/login">Войти</a></li>
-              <li><a href="/accounts/signup">Зарегистрироваться</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-
-          <!-- Section -->
-          <section>
-            <header class="major">
-              <h2>Ближайшие события</h2>
-            </header>
-            <div class="mini-posts">
-              <article>
-                <a href="#" class="image"
-                  ><img src="images/pic07.jpg" alt=""
-                /></a>
-                <p>
-                  Aenean ornare velit lacus, ac varius enim lorem ullamcorper
-                  dolore aliquam.
-                </p>
-              </article>
-              <article>
-                <a href="#" class="image"
-                  ><img src="images/pic08.jpg" alt=""
-                /></a>
-                <p>
-                  Aenean ornare velit lacus, ac varius enim lorem ullamcorper
-                  dolore aliquam.
-                </p>
-              </article>
-              <article>
-                <a href="#" class="image"
-                  ><img src="images/pic09.jpg" alt=""
-                /></a>
-                <p>
-                  Aenean ornare velit lacus, ac varius enim lorem ullamcorper
-                  dolore aliquam.
-                </p>
-              </article>
-            </div>
-            <ul class="actions">
-              <li><a href="/events" class="button">Больше</a></li>
-            </ul>
-          </section>
-
-          <!-- Section -->
-          <section>
-            <header class="major">
-              <h2>Оставайтесь на связи</h2>
-            </header>
-            <ul class="contact">
-              <li class="icon solid fa-envelope">
-                <a href="mailto:eco@demo.com">eco@demo.com</a>
-              </li>
-              <li class="icon brands fa-telegram">
-                <a href="https://t.me/eco_affiche_msc_bot" target="_blank">t.me/eco_affiche_msc_bot</a>
-              </li>
-              <li class="icon brands fa-vk">
-                <a href="https://vk.com/eco_affiche_msc" target="_blank">vk.com/eco_affiche_msc</a>
-              </li>
-            </ul>
-          </section>
-
-          <!-- Footer -->
-          <footer id="footer">
-            <p class="copyright">&copy; Untitled. All rights reserved.</p>
-          </footer>
-        </div>
-      </div>
     </div>
+    <div id="sidebar">
+        <div class="inner">
+            <!-- Search -->
+            <section id="search" class="alt">
+                <form method="post" action="#">
+                    {% csrf_token %}
+                    <input type="text" name="query" id="query"
+                           placeholder="Поиск"/>
+                </form>
+            </section>
 
-    <script src="{% static '/js/jquery.min.js' %}"></script>
-    <script src="{% static '/js/browser.min.js' %}"></script>
-    <script src="{% static '/js/breakpoints.min.js' %}"></script>
-    <script src="{% static '/js/util.js' %}"></script>
-    <script src="{% static '/js/main.js' %}"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
+            <!-- Menu -->
+            <nav id="menu">
+                <header class="major">
+                    <h2>Меню</h2>
+                </header>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/events">События</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li>
+                            <span class="opener">Аккаунт</span>
+                            <ul>
+                                {% if user.is_authenticated %}
+                                    <li><a href="/profile">Профиль</a></li>
+                                    <li><a id="submit-logout-form" href="#">Выйти</a>
+                                    </li>
+                                {% else %}
+                                    <li><a href="/accounts/login">Войти</a>
+                                    </li>
+                                    <li><a href="/accounts/signup">Зарегистрироваться</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="/accounts/login">Войти</a></li>
+                        <li><a href="/accounts/signup">Зарегистрироваться</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>Ближайшие события</h2>
+                </header>
+                <div class="mini-posts">
+                    {% for event in near_events %}
+                        <article>
+                            <a href="{% url 'event_detail' event.id %}">
+                                <p>{{ event.name }}</p></a>
+                            <p>{{ event.description }}</p>
+                            <br>
+                        </article>
+                    {% empty %}
+                        <p>Событий нет</p>
+                    {% endfor %}
+                </div>
+                <ul class="actions">
+                    <li><a href="{% url 'event_list' %}"
+                           class="button">Больше</a></li>
+                </ul>
+            </section>
+
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>Оставайтесь на связи</h2>
+                </header>
+                <ul class="contact">
+                    <li class="icon solid fa-envelope">
+                        <a href="mailto:eco@demo.com">eco@demo.com</a>
+                    </li>
+                    <li class="icon brands fa-telegram">
+                        <a href="https://t.me/eco_affiche_msc_bot"
+                           target="_blank">t.me/eco_affiche_msc_bot</a>
+                    </li>
+                    <li class="icon brands fa-vk">
+                        <a href="https://vk.com/eco_affiche_msc"
+                           target="_blank">vk.com/eco_affiche_msc</a>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer">
+            </footer>
+        </div>
+    </div>
+</div>
+
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/js/browser.min.js' %}"></script>
+<script src="{% static '/js/breakpoints.min.js' %}"></script>
+<script src="{% static '/js/util.js' %}"></script>
+<script src="{% static '/js/main.js' %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         var map;
         var geocoder;
         var addressInput = document.getElementById("address-input");
@@ -144,68 +136,68 @@
         ymaps.ready(init);
 
         function init() {
-          map = new ymaps.Map("map", {
-            center: [55.76, 37.64],
-            zoom: 10,
-          });
-
-          geocoder = new ymaps.Geocoder();
-
-          addressInput.addEventListener("input", function () {
-            var query = addressInput.value;
-            if (query.length > 3) {
-              geocoder.geocode(query).then(function (res) {
-                var firstGeoObject = res.geoObjects.get(0);
-                if (firstGeoObject) {
-                  map.geoObjects.removeAll();
-                  myPlacemark = new ymaps.Placemark(
-                    firstGeoObject.geometry.getCoordinates(),
-                    {
-                      balloonContent: firstGeoObject.getAddressLine(),
-                    }
-                  );
-                  map.geoObjects.add(myPlacemark);
-                  map.setCenter(firstGeoObject.geometry.getCoordinates(), 14);
-                  document.getElementById("latitude").value =
-                    firstGeoObject.geometry.getCoordinates()[0];
-                  document.getElementById("longitude").value =
-                    firstGeoObject.geometry.getCoordinates()[1];
-                }
-              });
-            }
-          });
-
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-              map.setCenter(
-                [position.coords.latitude, position.coords.longitude],
-                14
-              );
-              if (myPlacemark) {
-                myPlacemark.geometry.setCoordinates([
-                  position.coords.latitude,
-                  position.coords.longitude,
-                ]);
-              } else {
-                myPlacemark = new ymaps.Placemark([
-                  position.coords.latitude,
-                  position.coords.longitude,
-                ]);
-                map.geoObjects.add(myPlacemark);
-              }
+            map = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 10,
             });
-          }
-        }
-      });
-    </script>
-    <script>
-      var form = document.getElementById("logout-form");
 
-      document
+            geocoder = new ymaps.Geocoder();
+
+            addressInput.addEventListener("input", function () {
+                var query = addressInput.value;
+                if (query.length > 3) {
+                    geocoder.geocode(query).then(function (res) {
+                        var firstGeoObject = res.geoObjects.get(0);
+                        if (firstGeoObject) {
+                            map.geoObjects.removeAll();
+                            myPlacemark = new ymaps.Placemark(
+                                firstGeoObject.geometry.getCoordinates(),
+                                {
+                                    balloonContent: firstGeoObject.getAddressLine(),
+                                }
+                            );
+                            map.geoObjects.add(myPlacemark);
+                            map.setCenter(firstGeoObject.geometry.getCoordinates(), 14);
+                            document.getElementById("latitude").value =
+                                firstGeoObject.geometry.getCoordinates()[0];
+                            document.getElementById("longitude").value =
+                                firstGeoObject.geometry.getCoordinates()[1];
+                        }
+                    });
+                }
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    map.setCenter(
+                        [position.coords.latitude, position.coords.longitude],
+                        14
+                    );
+                    if (myPlacemark) {
+                        myPlacemark.geometry.setCoordinates([
+                            position.coords.latitude,
+                            position.coords.longitude,
+                        ]);
+                    } else {
+                        myPlacemark = new ymaps.Placemark([
+                            position.coords.latitude,
+                            position.coords.longitude,
+                        ]);
+                        map.geoObjects.add(myPlacemark);
+                    }
+                });
+            }
+        }
+    });
+</script>
+<script>
+    var form = document.getElementById("logout-form");
+
+    document
         .getElementById("submit-logout-form")
         .addEventListener("click", function () {
-          form.submit();
+            form.submit();
         });
-    </script>
-  </body>
+</script>
+</body>
 </html>

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
@@ -13,6 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2', 'first_name',
                   'last_name', 'age', 'home_address')
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserModel
@@ -26,8 +29,25 @@ class UserProfileForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ('name', 'date', 'description', 'location')
+        fields = ('name', 'date', 'description', 'longitude', 'latitude')
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'description': forms.Textarea(attrs={'rows': 3}),
         }
+
+    def clean_date(self):
+        date = self.cleaned_data.get('date')
+        if date < datetime.now().date():
+            raise forms.ValidationError('Дата не может быть в прошлом.')
+        return date
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Получаем пользователя из kwargs
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        event = super().save(commit=False)
+        event.organizer = self.user.organizer  # Устанавливаем организатора
+        if commit:
+            event.save()
+        return event

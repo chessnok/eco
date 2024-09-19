@@ -31,6 +31,14 @@ services:
       - static_volume:/static
       - media_volume:/media
 
+  bot:
+    build: ./backend
+    command: python manage.py runtgbot
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/code/
   redis:
     image: "redis:alpine"
     restart: always
@@ -73,6 +81,7 @@ services:
     volumes:
       - static_volume:/app/eco/static
       - media_volume:/app/eco/media
+
   flower:
     image: mher/flower
     restart: always

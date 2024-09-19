@@ -1,25 +1,43 @@
 {% extends "base_generic.html" %}
-{% block title%}Личный кабинет{% endblock %}
+{% block title %}Личный кабинет{% endblock %}
 {% block content %}
-<section>
-    <h2>Личный кабинет</h2>
+    <section>
+        <h2>Личный кабинет</h2>
 
-    {% if user.is_organizer and user.organither %}
-        <h3>Информация об организации</h3>
-        <p>Название организации: {{ user.organither.organization_name }}</p>
-        <p>ОГРН: {{ user.organither.ogrn }}</p>
-        <p>Статус: {{ user.organither.get_status_display }}</p>
-    {% else %}
-        <p>Вы не являетесь организатором. <a
-                href="{% url 'register_organizer' %}">Зарегистрироваться как
-            организатор</a></p>
-    {% endif %}
+        {% if user.is_organizer and user.organizer is not None %}
+            <h3>Информация об организации</h3>
+            <p>Название организации: {{ user.organizer.organization_name }}</p>
+            <p>ОГРН: {{ user.organizer.ogrn }}</p>
+            <p>Статус: {{ user.organizer.get_status_display }}</p>
+            {% if user.organizer.status == 'Confirmed' %}
+                <form method="post" action="{% url 'new_event' %}">
+                    {% csrf_token %}
+                    {% include "includes/form.html" with form=event_form %}
+                    <button type="submit" class="button primary">Добавить
+                        мероприятие
+                    </button>
+                </form>
+            {% endif %}
+            {% for event in user.organizer.events_list %}
+                <article>
+                    <h4>{{ event.name }}</h4>
+                    <p>{{ event.description }}</p>
+                </article>
+            {% empty %}
+                <p>У вас нет мероприятий</p>
+            {% endfor %}
+        {% else %}
+            <p>Вы не являетесь организатором. <a
+                    href="{% url 'register_organizer' %}">Зарегистрироваться
+                как
+                организатор</a></p>
+        {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-        {% include "includes/form.html" %}
-        <button type="submit" class="button primary">Сохранить изменения
-        </button>
-    </form>
-</section>
+        <form method="post">
+            {% csrf_token %}
+            {% include "includes/form.html" with form=user_form %}
+            <button type="submit" class="button primary">Сохранить изменения
+            </button>
+        </form>
+    </section>
 {% endblock %}

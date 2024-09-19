@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from rest_framework.reverse import reverse
 
 from notifications.actions import send_push_notification
 from .models import UserModel
@@ -23,7 +24,8 @@ def register_organizer(request):
                 send_push_notification(
                     user=admin,
                     message=f"Новая заявка на подтверждение организатора от {request.user.username}",
-                    url=f"/admin/app_name/organither/{organizer.id}/change/"
+                    url=reverse('admin:events_organizer_change',
+                                args=[organizer.pk]),
                 )
 
             return redirect('user_profile')
