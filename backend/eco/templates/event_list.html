@@ -3,6 +3,7 @@
 {% block title %}Список мероприятий{% endblock %}
 
 {% block content %}
+{% load static %}
 <section>
 <h2>Список мероприятий</h2>
 <form method="GET" class="form-inline mb-3">
@@ -10,17 +11,25 @@
     <button type="submit" class="btn btn-primary">Фильтровать</button>
 </form>
 
-<ul class="list-group mb-3">
-    {% for event in events %}
-        <li class="list-group-item">
-            <strong>{{ event.name }}</strong><br>
-            Локация: {{ event.location }}<br>
-            Дата: {{ event.date }}
-        </li>
-    {% endfor %}
-</ul>
-
 <div id="events-map" style="width: 100%; height: 400px;"></div>
+<br>
+<section>
+    <header class="major">
+        <h2>Мероприятия</h2>
+    </header>
+    <div class="posts">
+        {% for event in events %}
+        <article>
+            <a href="{% url 'event_detail' event.id %}" class="image"><img src="{% static 'img/pic02.jpg' %}" alt="" /></a>
+            <h3>{{ event.name }}</h3>
+            <p>{{ event.description|truncatewords_html:10|striptags|safe }}</p>
+            <ul class="actions">
+                <li><a href="#" class="button">Учавствовать</a></li>
+            </ul>
+        </article>
+        {% endfor %}
+    </div>
+</section>
 
 <script>
 ymaps.ready(function() {

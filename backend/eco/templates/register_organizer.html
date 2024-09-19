@@ -3,6 +3,7 @@
 {% block title %}Регистрация организатора{% endblock %}
 
 {% block content %}
+<section>
     <h2>Регистрация организатора</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -10,4 +11,5 @@
         <button type="submit" class="btn btn-primary">Отправить на проверку
         </button>
     </form>
+</section>
 {% endblock %}

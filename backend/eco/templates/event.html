@@ -1,18 +1,18 @@
 {% extends "base_generic.html" %}
+{% load static %}
 {% block title %}
     {{ event.name }}
 {% endblock %}
 {% block content %}
-    <div class="inner">
-        <header class="main">
-                    <h1>{{ event.name }}</h1>
-                </header>
-                <p>{{ event.description }}</p>
+<header id="header">
+    <a href="/events" class="logo icon solid fa-arrow-left">&nbsp;Назад</a>
+</header>
 
-            </div>
-            <span class="image object">
-            <img src="/static/img/landing.png" alt="">
-        </span>
-        </section>
-    </div>
+<section>
+    <header class="main">
+        <h1>{{ event.name }}</h1>
+    </header>
+    <span class="image main"><img src="{% static 'img/pic11.jpg' %}" alt="" /></span>
+    <p>{{ event.description }}</p>
+</section>
 {% endblock %}
