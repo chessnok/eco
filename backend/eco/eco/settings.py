@@ -28,8 +28,16 @@ SECRET_KEY = "django-insecure-lfbi@)z#%s^*af$$+hf9*u8^t2(3)9$0buq%j$^9*gmr7l*_h@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*",
+]
 
+CORS_ALLOWED_ORIGINS = [
+    "*",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "*",
+]
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
