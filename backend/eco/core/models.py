@@ -68,7 +68,7 @@ class Event(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    date = models.DateField()
+    date = models.DateField(null=True, blank=True)
     description = models.TextField()
     image = models.ImageField()
     source = models.URLField()

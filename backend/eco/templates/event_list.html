@@ -3,48 +3,54 @@
 {% block title %}Список мероприятий{% endblock %}
 
 {% block content %}
-{% load static %}
-<section>
-<h2>Список мероприятий</h2>
-<form method="GET" class="form-inline mb-3">
-    <input type="text" name="location" class="form-control mr-2" placeholder="Введите локацию">
-    <button type="submit" class="btn btn-primary">Фильтровать</button>
-</form>
+    {% load static %}
+    <section>
+        <h2>Список мероприятий</h2>
+        <form method="GET" class="form-inline mb-3">
+            <input type="text" name="location" class="form-control mr-2"
+                   placeholder="Введите локацию">
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+        </form>
 
-<div id="events-map" style="width: 100%; height: 400px;"></div>
-<br>
-<section>
-    <header class="major">
-        <h2>Мероприятия</h2>
-    </header>
-    <div class="posts">
-        {% for event in events %}
-        <article>
-            <a href="{% url 'event_detail' event.id %}" class="image"><img src="{% static 'img/pic02.jpg' %}" alt="" /></a>
-            <h3>{{ event.name }}</h3>
-            <p>{{ event.description|truncatewords_html:10|striptags|safe }}</p>
-            <ul class="actions">
-                <li><a href="#" class="button">Учавствовать</a></li>
-            </ul>
-        </article>
-        {% endfor %}
-    </div>
-</section>
+        <div id="events-map" style="width: 100%; height: 400px;"></div>
+        <br>
+        <section>
+            <header class="major">
+                <h2>Мероприятия</h2>
+            </header>
+            <div class="posts">
+                {% for event in events %}
+                    <article>
+                        <a href="{% url 'event_detail' event.id %}"
+                           class="image"><img
+                                src="{% static 'img/pic02.jpg' %}" alt=""/></a>
+                        <h3>{{ event.name }}</h3>
+                        <p>{{ event.description|truncatewords_html:10|striptags|safe }}</p>
+                        <form method="post" class="actions"
+                              action="{% url 'participate' event.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="button">Учавствовать
+                            </button>
+                        </form>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
 
-<script>
-ymaps.ready(function() {
-    var map = new ymaps.Map('events-map', {
-        center: [55.76, 37.64],
-        zoom: 10
-    });
+        <script>
+            ymaps.ready(function () {
+                var map = new ymaps.Map('events-map', {
+                    center: [55.76, 37.64],
+                    zoom: 10
+                });
 
-    {% for event in events %}
-    var placemark = new ymaps.Placemark([{{ event.latitude }}, {{ event.longitude }}], {
-        balloonContent: '{{ event.name }}<br>{{ event.date }}<br>{{ event.description }}'
-    });
-    map.geoObjects.add(placemark);
-    {% endfor %}
-});
-</script>
-</section>
+                {% for event in events %}
+                    var placemark = new ymaps.Placemark([{{ event.latitude }}, {{ event.longitude }}], {
+                        balloonContent: '{{ event.name }}<br>{{ event.date }}<br>{{ event.description }}'
+                    });
+                    map.geoObjects.add(placemark);
+                {% endfor %}
+            });
+        </script>
+    </section>
 {% endblock %}

@@ -115,8 +115,11 @@ WSGI_APPLICATION = "eco.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("POSTGRES_DB", default="postgres"),
+        "USER": config("POSTGRES_USER", default="postgres"),
+        "PASSWORD": config("POSTGRES_PASSWORD", default="postgres"),
+        "HOST": config("POSTGRES_HOST", default="db"),
     },
 }
 
@@ -206,6 +209,15 @@ CELERY_BEAT_SCHEDULE = {
     "send_event_reminders": {
         "task": "core.tasks.send_event_reminders",
         "schedule": crontab(hour="12", minute="0"),  # Запуск каждый день
+    },
+    "generate_promo_codes_for_tomorrow_events":
+        {
+            "task": "core.tasks.generate_promo_codes_for_tomorrow_events",
+            "schedule": crontab(hour='0', minute='0'),
+        },
+    "fetch_events": {
+        "task": "core.tasks.fetch_events",
+        "schedule": crontab(hour='0', minute='0'),
     },
 }
 
