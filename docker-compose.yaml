@@ -75,7 +75,7 @@ services:
     build: ./nginx
     restart: always
     ports:
-      - "10001:80"
+      - "80:80"
     depends_on:
       - web
     volumes:
