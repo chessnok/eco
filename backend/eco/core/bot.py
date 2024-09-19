@@ -2,13 +2,11 @@ import telebot
 from telebot import types
 from django.conf import settings
 from core.models import BotUser, \
-    BotTicket  # Обязательно замени 'myapp' на реальное имя приложения
+    BotTicket
 
-# Инициализация бота с токеном из settings
-TOKEN = settings.TELEGRAM_BOT_TOKEN  # Получаем токен из настроек
+TOKEN = settings.TELEGRAM_BOT_TOKEN
 bot = telebot.TeleBot(TOKEN)
 
-# Чат оператора (группы или канала) из settings
 OPERATOR_CHAT_ID = settings.TELEGRAM_CHAT_ID
 
 

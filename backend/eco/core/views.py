@@ -43,7 +43,8 @@ def user_profile(request):
                 promo_code = promo_form.cleaned_data['code']
                 try:
                     discount = promo_code.activate(request.user)
-                    messages.success(request, f"Промокод активирован! Вы получили {discount} на баланс.")
+                    messages.success(request,
+                                     f"Промокод активирован! Вы получили {discount} на баланс.")
                 except ValueError as e:
                     messages.error(request, str(e))
             return redirect('user_profile')
@@ -91,8 +92,18 @@ def new_event(request):
         'balance': request.user.balance
     })
 
+
 def event(request, event_id):
     event = Event.objects.get(id=event_id)
     if not event or not event.is_published:
         return redirect('event_list')
     return render(request, 'event.html', {'event': event})
+
+
+@login_required
+def participate(request, event_id):
+    event = Event.objects.get(id=event_id)
+    if not event or not event.is_published:
+        return redirect('event_list')
+    request.user.participated_events.add(event)
+    return redirect('event_detail', event_id=event_id)
