@@ -47,8 +47,8 @@ class Organizer(models.Model):
 
     def save(self, *args, **kwargs):
         is_init = not self.pk
-        # if is_init:
-        #     self.fetch_api_data()
+        if is_init:
+            self.fetch_api_data()
         super().save(*args, **kwargs)
 
     def __str__(self):
