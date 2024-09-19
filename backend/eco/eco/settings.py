@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "core.apps.CoreConfig",
     "notifications.apps.NotificationsConfig",
     "events.apps.EventsConfig",
-    "bootstrap_datepicker_plus"
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -112,8 +111,11 @@ WSGI_APPLICATION = "eco.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("POSTGRES_DB", default=""),
+        "USER": config("POSTGRES_USER", default=""),
+        "PASSWORD": config("POSTGRES_PASSWORD", default=""),
+        "HOST": config("POSTGRES_HOST", default=""),
     }
 }
 
@@ -154,7 +156,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static_dev",
 ]
 
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR.parent.parent / "static"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
