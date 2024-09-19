@@ -3,7 +3,7 @@ from datetime import datetime
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from core.models import UserModel, Event
+from core.models import UserModel, Event, PromoCode
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -51,3 +51,15 @@ class EventForm(forms.ModelForm):
         if commit:
             event.save()
         return event
+
+
+class PromoCodeActivationForm(forms.Form):
+    code = forms.CharField(max_length=20, label="Промокод")
+
+    def clean_code(self):
+        code = self.cleaned_data['code']
+        try:
+            promo_code = PromoCode.objects.get(code=code)
+        except PromoCode.DoesNotExist:
+            raise forms.ValidationError("Промокод не найден.")
+        return promo_code

@@ -1,6 +1,7 @@
 # core/tasks.py
 from datetime import timedelta
 from django.utils import timezone
+from django.utils.timezone import now
 from haversine import haversine
 
 from core.models import BotUser, Event
@@ -39,3 +40,11 @@ def send_event_reminders():
                     user.tg_id,
                     f"Напоминание: Мероприятие '{event.name}' состоится через {days_left} день(дня). Описание: {event.description}"
                 )
+
+@app.task
+def generate_promo_codes_for_tomorrow_events():
+    tomorrow = now().date() + timedelta(days=1)
+    events = Event.objects.filter(date=tomorrow, promo_codes__isnull=True)
+
+    for event in events:
+        event.generate_promo_codes()

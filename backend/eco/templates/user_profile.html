@@ -4,9 +4,10 @@
     <section>
         <h2>Личный кабинет</h2>
 
-        {% if user.is_organizer and user.organizer is not None %}
+        {% if user.is_organizer and user.organizer %}
             <h3>Информация об организации</h3>
-            <p>Название организации: {{ user.organizer.organization_name }}</p>
+            <p>Название
+                организации: {{ user.organizer.organization_name }}</p>
             <p>ОГРН: {{ user.organizer.ogrn }}</p>
             <p>Статус: {{ user.organizer.get_status_display }}</p>
             {% if user.organizer.status == 'Confirmed' %}
@@ -32,12 +33,22 @@
                 как
                 организатор</a></p>
         {% endif %}
-
-        <form method="post">
-            {% csrf_token %}
-            {% include "includes/form.html" with form=user_form %}
-            <button type="submit" class="button primary">Сохранить изменения
-            </button>
-        </form>
     </section>
+    <h3>Информация об аккаунте</h3>
+    <h4>У вас {{ balance }} листиков</h4>
+    <form method="post">
+        {% csrf_token %}
+        {% include "includes/form.html" with form=promo_form %}
+        <button type="submit" class="button primary">Я поучавстовал в
+            мероприятии!
+        </button>
+    </form>
+    <form method="post">
+        {% csrf_token %}
+        {% include "includes/form.html" with form=user_form %}
+        <button type="submit" class="button primary">Сохранить
+            изменения
+        </button>
+    </form>
 {% endblock %}
+
